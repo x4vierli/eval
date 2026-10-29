@@ -1,5 +1,7 @@
 # AiWork.Code on Kimi K3
 
+**Organization:** Ant Digital Technologies
+
 **Result: 30/30 tasks completed; 25 passed, 5 failed (83.3%). Unranked.**
 
 > **Selection disclosure — this is not a first-valid-attempt result.** `benchmark.json` sets
