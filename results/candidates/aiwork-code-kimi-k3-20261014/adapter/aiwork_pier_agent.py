@@ -39,7 +39,7 @@ _AID = "tb"
 _PRINT_JSONL = f"{_AGENT_LOG}/print.jsonl"
 _PRINT_ERR = f"{_AGENT_LOG}/print.err"
 
-_MAAS_FALLBACK_IPS = ["47.102.98.85", "101.132.135.45"]
+_MAAS_FALLBACK_IPS = ["<redacted-ip-1>", "<redacted-ip-2>"]
 
 _UV_PRELOAD_TARBALL = os.environ.get("DTCODER_UV_PRELOAD", "/tmp/uv-preload.tar.gz")
 _UV_PRELOAD_REMOTE = "/tmp/uv-preload.tar.gz"
@@ -83,7 +83,7 @@ class AiworkAgent(BaseInstalledAgent):
         self,
         logs_dir: Path,
         dtcoder_bin: str | None = None,
-        provider_url: str = "https://maas-api.antdigital.com/v1",
+        provider_url: str = "https://<internal-gateway-host>/v1",
         provider_api: str = "anthropic-messages",
         model: str | None = None,
         thinking_level: str | None = "high",
@@ -140,7 +140,7 @@ class AiworkAgent(BaseInstalledAgent):
         await self.exec_as_root(environment, command=f"chmod +x {_REMOTE_BIN}")
 
         # NOTE: Pier air-gaps the task env behind a squid proxy that allowlists by
-        # DOMAIN (network_allowlist below). dtcoder reaches dtmaas via the container's
+        # DOMAIN (network_allowlist below). dtcoder reaches the internal gateway via the container's
         # HTTP(S)_PROXY env; we must NOT pin MaaS IPs into /etc/hosts (that would dial
         # the IP directly and bypass the proxy on the internal net -> PROVIDER_NETWORK_ERROR).
 
@@ -201,9 +201,9 @@ class AiworkAgent(BaseInstalledAgent):
 
     def network_allowlist(self) -> NetworkAllowlist:
         # DeepSWE tasks are allow_internet=false; Pier air-gaps the task env but
-        # allowlists the agent's own LLM egress. dtcoder must reach dtmaas.
+        # allowlists the agent's own LLM egress. dtcoder must reach the internal gateway.
         from urllib.parse import urlparse as _u
-        host = _u(self._provider_url).hostname or "maas-api.antdigital.com"
+        host = _u(self._provider_url).hostname or "<internal-gateway-host>"
         return NetworkAllowlist(domains=[host])
 
     def install_spec(self) -> AgentInstallSpec:
@@ -274,7 +274,7 @@ class AiworkAgent(BaseInstalledAgent):
         try:
             # exec_as_agent routes through Pier's agent_process_env, which merges the
             # squid HTTP(S)_PROXY for THIS agent exec only (agent-phase-scoped; the
-            # verifier/task never sees it). That is how dtcoder reaches dtmaas under
+            # verifier/task never sees it). That is how dtcoder reaches the internal gateway under
             # the air-gapped DeepSWE task without opening the task container's network.
             await self.exec_as_agent(
                 environment, command=print_cmd, env=env, timeout_sec=self._timeout_sec

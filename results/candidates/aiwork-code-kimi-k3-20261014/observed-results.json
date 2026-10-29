@@ -2,12 +2,12 @@
  "name": "aiwork-code",
  "label": "AiWork.Code",
  "model": "kimi-k3",
- "provider": "dtmaas",
+ "provider": "internal-gateway",
  "run_id": "20261014-164330-fhe-aiwork-29695-30052",
  "manifest_sha256": "813eb5b0726113daa211e5fc5732b281ad6ae29d840544493ab027d803d6372b",
  "complete": true,
  "comparable": false,
- "measurement_basis": "Local Docker (no Runta golden checkpoint), 8 tasks in parallel on one host. kimi-k3 via dtmaas, anthropic-messages wire. Costs are the FHE price-table repricing (kimi-k3-2026-08-20) on the first-call-cold basis (cost_first_cold_usd). 28/30 tasks have recorded usage; the two agent-timeout failures persisted none, so total and per-pass cost are lower bounds (missing costs excluded, never zero-filled). The provider reported no cache-write tokens on this wire; fresh_input and cache_write share the 3.0/Mtok rate, so this does not change cost. cost_usd is a separate warm-cache observed value and does not sum to the headline.",
+ "measurement_basis": "Local Docker (no Runta golden checkpoint), 8 tasks in parallel on one host. kimi-k3 via an internal model gateway, anthropic-messages wire. Costs are the FHE price-table repricing (kimi-k3-2026-08-20) on the first-call-cold basis (cost_first_cold_usd). 28/30 tasks have recorded usage; the two agent-timeout failures persisted none, so total and per-pass cost are lower bounds (missing costs excluded, never zero-filled). The provider reported no cache-write tokens on this wire; fresh_input and cache_write share the 3.0/Mtok rate, so this does not change cost. cost_usd is a separate warm-cache observed value and does not sum to the headline.",
  "totals": {
   "all": {
    "expected": 30,

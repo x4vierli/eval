@@ -74,7 +74,7 @@ Applied to a copy before packing. No score, token count, timing, or verifier out
   masks it at capture time to an 11-character `sk-?****???` form (present in 141 files). After
   `*_API_KEY=` in 9 DeepSWE `lock.json` files that mask is also replaced
   with `<REDACTED>`.
-- **Kept**: the model endpoint `maas-api.antdigital.com` and its public fallback IPs; the
+- **Kept** in the evidence: the model endpoint host and its fallback IPs (named only generically in this summary); the
   evaluation service account's paths under `/home/fhe-eval/` (job directories, binary path); and
   the `user:pass@example.com` and credential-shaped strings that are the httpx and
   sanitize-git-repo tasks' own test fixtures.
@@ -87,48 +87,48 @@ Applied to a copy before packing. No score, token count, timing, or verifier out
 This run was chosen after the fact as the highest-scoring of every complete 30-task sweep our
 gateway ran on this task set (local Docker, Kimi K3, checkpoint label `local-fhe-no-runta`).
 Builds, the provider wire, and in one case the provider changed over time. Times are the run-id
-start (UTC+8); passed is out of completed tasks. The 2026-09-22 21:41 sweep is labelled provider
-`dtmaas` in its gateway aggregate, but its job configs point at `api.moonshot.cn`.
+start (UTC+8); passed is out of completed tasks. The 2026-09-22 21:41 sweep is labelled with the internal
+gateway as provider in its aggregate, but its job configs point at `api.moonshot.cn`.
 
 | Start | dtcoder build | Provider | Wire | Passed | Infra-invalid |
 |---|---|---|---|---:|---:|
-| 2026-09-21 11:54 | `v1.26387.0-f9e4034` | dtmaas | (not recorded) | 21/30 | 0 |
-| 2026-09-22 00:38 | `v1.26387.0-f9e4034` | dtmaas | (not recorded) | 20/30 | 0 |
-| 2026-09-22 09:34 | `v1.26387.0-f9e4034` | dtmaas | (not recorded) | 22/30 | 0 |
-| 2026-09-22 16:42 | `v1.26392.0-88728b7` | dtmaas | (not recorded) | 17/29 | 1 |
+| 2026-09-21 11:54 | `v1.26387.0-f9e4034` | internal gateway | (not recorded) | 21/30 | 0 |
+| 2026-09-22 00:38 | `v1.26387.0-f9e4034` | internal gateway | (not recorded) | 20/30 | 0 |
+| 2026-09-22 09:34 | `v1.26387.0-f9e4034` | internal gateway | (not recorded) | 22/30 | 0 |
+| 2026-09-22 16:42 | `v1.26392.0-88728b7` | internal gateway | (not recorded) | 17/29 | 1 |
 | 2026-09-22 21:41 | `v1.26392.0-88728b7` | Kimi official API | anthropic-messages | 21/30 | 0 |
-| 2026-09-23 15:26 | `v1.26393.0-0e61b64` | dtmaas | anthropic-messages | 17/30 | 0 |
-| 2026-09-23 23:19 | `v1.26393.0-b7e68db` | dtmaas | anthropic-messages | 18/30 | 0 |
-| 2026-09-26 11:15 | `v1.26396.0-47bd3d0` | dtmaas | anthropic-messages | 20/30 | 0 |
-| 2026-09-28 00:24 | `v1.26397.0-d7cf76c` | dtmaas | anthropic-messages | 19/30 | 0 |
-| 2026-09-28 11:17 | `v1.26401.0-7cec944` | dtmaas | anthropic-messages | 19/30 | 0 |
-| 2026-09-30 09:52 | `v1.26403.0-27971f2` | dtmaas | anthropic-messages | 0/30 | 0 |
-| 2026-09-30 09:52 | `v1.26403.0-5e650f5` | dtmaas | anthropic-messages | 0/30 | 0 |
-| 2026-10-01 09:53 | `v1.26404.0-1e92abc` | dtmaas | anthropic-messages | 0/30 | 0 |
-| 2026-10-05 09:49 | `v1.26387.0-f9e4034` | dtmaas | anthropic-messages | 23/30 | 0 |
-| 2026-10-05 22:07 | `v1.26411.0-38cdfac` | dtmaas | anthropic-messages | 0/30 | 0 |
-| 2026-10-06 11:19 | `v1.26412.0-38cdfac` | dtmaas | openai-responses | 17/30 | 0 |
-| 2026-10-09 12:20 | `v1.26415.0-844012e` | dtmaas | openai-responses | 19/30 | 0 |
-| 2026-10-10 13:42 | `v1.26416.0-4b5cfdd` | dtmaas | openai-responses | 19/30 | 0 |
-| 2026-10-12 11:06 | `v1.26421.0-9ea2cd8` | dtmaas | openai-responses | 18/30 | 0 |
-| 2026-10-12 14:36 | `v1.26421.0-60c158c` | dtmaas | openai-responses | 20/30 | 0 |
-| 2026-10-12 17:17 | `v1.26421.0-9ea2cd8` | dtmaas | anthropic-messages | 24/30 | 0 |
-| 2026-10-12 17:47 | `v1.26421.0-7620b11` | dtmaas | anthropic-messages | 21/30 | 0 |
-| 2026-10-12 21:01 | `v1.26421.0-5884673` | dtmaas | anthropic-messages | 21/29 | 1 |
-| 2026-10-13 11:03 | `v1.26422.0-7ecb0e2` | dtmaas | anthropic-messages | 23/30 | 0 |
-| 2026-10-13 18:57 | `v1.26422.0-30efd90` | dtmaas | anthropic-messages | 22/30 | 0 |
-| 2026-10-14 10:51 | `v1.26423.0-5733e72` | dtmaas | anthropic-messages | 21/30 | 0 |
-| 2026-10-14 16:43 | `v1.26423.0-c9b4e7d` | dtmaas | anthropic-messages | 25/30 | 0 | ← **this submission**
-| 2026-10-14 21:52 | `v1.26387.0-f9e4034` | dtmaas | anthropic-messages | 20/30 | 0 |
-| 2026-10-14 23:12 | `v1.26387.0-f9e4034` | dtmaas | anthropic-messages | 19/30 | 0 |
-| 2026-10-15 00:23 | `v1.26423.0-a2d4fe2` | dtmaas | anthropic-messages | 22/30 | 0 |
-| 2026-10-15 00:32 | `v1.26387.0-f9e4034` | dtmaas | anthropic-messages | 21/30 | 0 |
-| 2026-10-15 16:00 | `v1.26387.0-f9e4034` | dtmaas | anthropic-messages | 20/30 | 0 |
-| 2026-10-15 19:19 | `v1.26424.0-ff61834` | dtmaas | anthropic-messages | 17/30 | 0 |
-| 2026-10-17 10:31 | `v1.26387.0-f9e4034` | dtmaas | anthropic-messages | 19/30 | 0 |
-| 2026-10-17 22:48 | `v1.26387.0-f9e4034` | dtmaas | anthropic-messages | 20/30 | 0 |
-| 2026-10-18 00:31 | `v1.26387.0-f9e4034` | dtmaas | anthropic-messages | 20/30 | 0 |
-| 2026-10-18 20:22 | `v1.26427.0-ff61834` | dtmaas | anthropic-messages | 15/30 | 0 |
+| 2026-09-23 15:26 | `v1.26393.0-0e61b64` | internal gateway | anthropic-messages | 17/30 | 0 |
+| 2026-09-23 23:19 | `v1.26393.0-b7e68db` | internal gateway | anthropic-messages | 18/30 | 0 |
+| 2026-09-26 11:15 | `v1.26396.0-47bd3d0` | internal gateway | anthropic-messages | 20/30 | 0 |
+| 2026-09-28 00:24 | `v1.26397.0-d7cf76c` | internal gateway | anthropic-messages | 19/30 | 0 |
+| 2026-09-28 11:17 | `v1.26401.0-7cec944` | internal gateway | anthropic-messages | 19/30 | 0 |
+| 2026-09-30 09:52 | `v1.26403.0-27971f2` | internal gateway | anthropic-messages | 0/30 | 0 |
+| 2026-09-30 09:52 | `v1.26403.0-5e650f5` | internal gateway | anthropic-messages | 0/30 | 0 |
+| 2026-10-01 09:53 | `v1.26404.0-1e92abc` | internal gateway | anthropic-messages | 0/30 | 0 |
+| 2026-10-05 09:49 | `v1.26387.0-f9e4034` | internal gateway | anthropic-messages | 23/30 | 0 |
+| 2026-10-05 22:07 | `v1.26411.0-38cdfac` | internal gateway | anthropic-messages | 0/30 | 0 |
+| 2026-10-06 11:19 | `v1.26412.0-38cdfac` | internal gateway | openai-responses | 17/30 | 0 |
+| 2026-10-09 12:20 | `v1.26415.0-844012e` | internal gateway | openai-responses | 19/30 | 0 |
+| 2026-10-10 13:42 | `v1.26416.0-4b5cfdd` | internal gateway | openai-responses | 19/30 | 0 |
+| 2026-10-12 11:06 | `v1.26421.0-9ea2cd8` | internal gateway | openai-responses | 18/30 | 0 |
+| 2026-10-12 14:36 | `v1.26421.0-60c158c` | internal gateway | openai-responses | 20/30 | 0 |
+| 2026-10-12 17:17 | `v1.26421.0-9ea2cd8` | internal gateway | anthropic-messages | 24/30 | 0 |
+| 2026-10-12 17:47 | `v1.26421.0-7620b11` | internal gateway | anthropic-messages | 21/30 | 0 |
+| 2026-10-12 21:01 | `v1.26421.0-5884673` | internal gateway | anthropic-messages | 21/29 | 1 |
+| 2026-10-13 11:03 | `v1.26422.0-7ecb0e2` | internal gateway | anthropic-messages | 23/30 | 0 |
+| 2026-10-13 18:57 | `v1.26422.0-30efd90` | internal gateway | anthropic-messages | 22/30 | 0 |
+| 2026-10-14 10:51 | `v1.26423.0-5733e72` | internal gateway | anthropic-messages | 21/30 | 0 |
+| 2026-10-14 16:43 | `v1.26423.0-c9b4e7d` | internal gateway | anthropic-messages | 25/30 | 0 | ← **this submission**
+| 2026-10-14 21:52 | `v1.26387.0-f9e4034` | internal gateway | anthropic-messages | 20/30 | 0 |
+| 2026-10-14 23:12 | `v1.26387.0-f9e4034` | internal gateway | anthropic-messages | 19/30 | 0 |
+| 2026-10-15 00:23 | `v1.26423.0-a2d4fe2` | internal gateway | anthropic-messages | 22/30 | 0 |
+| 2026-10-15 00:32 | `v1.26387.0-f9e4034` | internal gateway | anthropic-messages | 21/30 | 0 |
+| 2026-10-15 16:00 | `v1.26387.0-f9e4034` | internal gateway | anthropic-messages | 20/30 | 0 |
+| 2026-10-15 19:19 | `v1.26424.0-ff61834` | internal gateway | anthropic-messages | 17/30 | 0 |
+| 2026-10-17 10:31 | `v1.26387.0-f9e4034` | internal gateway | anthropic-messages | 19/30 | 0 |
+| 2026-10-17 22:48 | `v1.26387.0-f9e4034` | internal gateway | anthropic-messages | 20/30 | 0 |
+| 2026-10-18 00:31 | `v1.26387.0-f9e4034` | internal gateway | anthropic-messages | 20/30 | 0 |
+| 2026-10-18 20:22 | `v1.26427.0-ff61834` | internal gateway | anthropic-messages | 15/30 | 0 |
 
 Partial, aborted, and smoke runs on the same gateway, not counted above:
 

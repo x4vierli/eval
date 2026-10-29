@@ -7,7 +7,7 @@
 > **Selection disclosure — this is not a first-valid-attempt result.** `benchmark.json` sets
 > `canonical_selection` to the first valid attempt. Between 2026-09-21 and 2026-10-18 our
 > evaluation gateway ran **37 complete 30-task sweeps** of AiWork.Code development builds on this
-> task set (36 via dtmaas, one via Kimi's official API). Four scored 0/30; the other 33 scored
+> task set (36 via our internal model gateway, one via Kimi's official API). Four scored 0/30; the other 33 scored
 > **15–25 passes (median 20)**. This run is the **single highest-scoring sweep**, chosen after
 > the fact; the next highest is 24/30. Its build was swept once; two sibling builds of the same
 > version scored 21/30 and 22/30, and a fixed reference build swept 11 times scored 19–23
@@ -41,7 +41,7 @@ turns 42.9. Infra-invalid: 0.
   `ae33d1f2…96524bba`, matching `agent_info.version` in all 30 run-leaf `result.json` files.
   The binary is not publicly downloadable; it is available to maintainers on request.
 - [`adapter/`](adapter/) holds the Harbor and Pier adapters this run used (sha256 `93712292…`
-  and `e97a0e6f…`). They are not the adapters proposed in #24; #24 was not used here. The
+  and `e97a0e6f…`; the published copies have the gateway host and IPs redacted, see the adapter README). They are not the adapters proposed in #24; #24 was not used here. The
   gateway runner that launched the jobs is not published; what it set is listed in
   `run-config.json` (`topology`, `runtime_egress_policy`).
 - `observed-results.json` has per-task outcome, native verifier reward, duration, token usage,
@@ -56,7 +56,7 @@ turns 42.9. Infra-invalid: 0.
 
 ## Configuration and deviations
 
-- Kimi K3 served by **dtmaas** at `maas-api.antdigital.com` over the **anthropic-messages**
+- Kimi K3 served by our **internal model gateway** over the **anthropic-messages**
   wire, not Fireworks. `dtcoder __print … -y --thinking-level high`, one run per task.
 - Local Docker on one host. The gateway ran **8 tasks in parallel**, each as its own Harbor or
   Pier job. No Runta checkpoint or fresh restore; no matched control run.

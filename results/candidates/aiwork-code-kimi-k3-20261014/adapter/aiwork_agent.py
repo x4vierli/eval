@@ -37,7 +37,7 @@ _AID = "tb"
 _PRINT_JSONL = f"{_AGENT_LOG}/print.jsonl"
 _PRINT_ERR = f"{_AGENT_LOG}/print.err"
 
-_MAAS_FALLBACK_IPS = ["47.102.98.85", "101.132.135.45"]
+_MAAS_FALLBACK_IPS = ["<redacted-ip-1>", "<redacted-ip-2>"]
 
 _UV_PRELOAD_TARBALL = os.environ.get("DTCODER_UV_PRELOAD", "/tmp/uv-preload.tar.gz")
 _UV_PRELOAD_REMOTE = "/tmp/uv-preload.tar.gz"
@@ -81,7 +81,7 @@ class AiworkAgent(BaseInstalledAgent):
         self,
         logs_dir: Path,
         dtcoder_bin: str | None = None,
-        provider_url: str = "https://maas-api.antdigital.com/v1",
+        provider_url: str = "https://<internal-gateway-host>/v1",
         provider_api: str = "anthropic-messages",
         model: str | None = None,
         thinking_level: str | None = "high",
@@ -138,15 +138,15 @@ class AiworkAgent(BaseInstalledAgent):
         await self.exec_as_root(environment, command=f"chmod +x {_REMOTE_BIN}")
 
         # Pin MaaS host IPs into /etc/hosts (best-effort; DNS-independent provider start).
-        # ONLY for the dtmaas host: its internal DNS is flaky and the fallback IPs are
-        # dtmaas-specific. For any other provider (e.g. official Kimi api.moonshot.cn) we
-        # must NOT pin — mapping a public host to dtmaas IPs would break TLS/routing; the
+        # ONLY for the internal gateway host: its internal DNS is flaky and the fallback IPs are
+        # specific to the internal gateway. For any other provider (e.g. official Kimi api.moonshot.cn) we
+        # must NOT pin — mapping a public host to the internal gateway IPs would break TLS/routing; the
         # TB container has public egress + working DNS, so rely on normal resolution.
         try:
             from urllib.parse import urlparse as _urlparse
             import socket as _socket
-            _maas_host = _urlparse(self._provider_url).hostname or "maas-api.antdigital.com"
-            if _maas_host == "maas-api.antdigital.com":
+            _maas_host = _urlparse(self._provider_url).hostname or "<internal-gateway-host>"
+            if _maas_host == "<internal-gateway-host>":
                 _ips = []
                 try:
                     for _ai in _socket.getaddrinfo(_maas_host, 443, _socket.AF_INET, _socket.SOCK_STREAM):

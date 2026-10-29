@@ -5,8 +5,8 @@
  "harness_internal_id": "aiwork",
  "model": "kimi-k3",
  "wire_model": "kimi-k3",
- "provider": "dtmaas",
- "provider_endpoint": "https://maas-api.antdigital.com/v1",
+ "provider": "internal-gateway",
+ "provider_endpoint": "https://<internal-gateway-host>/v1",
  "provider_api": "anthropic-messages",
  "thinking": "dtcoder --thinking-level high",
  "launch_bundle": {
@@ -21,14 +21,17 @@
   "harbor": {
    "path": "adapter/aiwork_agent.py",
    "import": "aiwork_agent:AiworkAgent",
-   "sha256": "9371229209b80baf948209a944225500ae53cacb314993c37684ddc37a9cf2e6"
+   "sha256": "9371229209b80baf948209a944225500ae53cacb314993c37684ddc37a9cf2e6",
+   "published_copy_sha256": "be0054e23fcc5d43e8bd2e901dd2667a95743de106a305308c2bc6a2e7b8782a"
   },
   "pier": {
    "path": "adapter/aiwork_pier_agent.py",
    "import": "aiwork_pier_agent:AiworkAgent",
-   "sha256": "e97a0e6fc8d384ba41ddcf6c68eb064224eec6a170daa743334aa4192279c926"
+   "sha256": "e97a0e6fc8d384ba41ddcf6c68eb064224eec6a170daa743334aa4192279c926",
+   "published_copy_sha256": "e5391b692e9306daf7fe614df2efca0b84e427995d42e3d9c7940c32cec32a56"
   },
-  "note": "These are the adapters this run used; their source is unchanged since 2026-09-22, before the run, and the instruction suffix in all 30 print.jsonl files matches them exactly. They are not the adapters proposed in PR #24, which drive dtcoder differently; PR #24 was not used for this run. The gateway runner that launched the jobs is not published; the settings it applied that are recorded in the evidence are listed under topology, timeouts, and runtime_egress_policy."
+  "note": "These are the adapters this run used; their source is unchanged since 2026-09-22, before the run, and the instruction suffix in all 30 print.jsonl files matches them exactly. They are not the adapters proposed in PR #24, which drive dtcoder differently; PR #24 was not used for this run. The gateway runner that launched the jobs is not published; the settings it applied that are recorded in the evidence are listed under topology, timeouts, and runtime_egress_policy.",
+  "redaction": "sha256 is that of the unredacted file the run used; the published copy replaces the internal gateway host, its two fallback IPs and the gateway name with placeholders (published_copy_sha256)."
  },
  "harness_modifications": [
   {
@@ -50,7 +53,7 @@
   {
    "what": "/etc/hosts",
    "scope": "21 Terminal-Bench tasks (Harbor adapter only)",
-   "detail": "maas-api.antdigital.com is pinned to its resolved IPs plus 47.102.98.85 and 101.132.135.45 (fallback IPs hard-coded in the adapter; in this run they were also the resolved addresses). The Pier adapter does not do this."
+   "detail": "<internal-gateway-host> is pinned to its resolved IPs plus two fallback IPs (redacted here; hard-coded in the adapter; in this run they were also the resolved addresses). The Pier adapter does not do this."
   },
   {
    "what": "post-run capture",
@@ -120,7 +123,7 @@
  "selection": {
   "period": "2026-09-21 to 2026-10-18",
   "complete_sweeps": 37,
-  "providers": "36 via dtmaas; 1 (2026-09-22 21:41, 21/30) via Kimi's official API. That sweep's gateway aggregate is labelled provider dtmaas, but its job configs point at api.moonshot.cn.",
+  "providers": "36 via the internal model gateway; 1 (2026-09-22 21:41, 21/30) via Kimi's official API. That sweep's gateway aggregate is labelled with the internal gateway as provider, but its job configs point at api.moonshot.cn.",
   "zero_score_sweeps": 4,
   "nonzero_sweeps_pass_range_including_this_run": [
    15,
@@ -158,7 +161,7 @@
    "allowed_hosts": [
     "*"
    ],
-   "agent_env": "HTTP(S)_PROXY set to a transport proxy (redacted in the evidence). NO_PROXY exempts local addresses, the model host and its two IPs, two other model APIs (api.moonshot.cn, api.deepseek.com), three mirror hosts (mirrors.aliyun.com, gh-proxy.com, hf-mirror.com), and corporate domain suffixes (.antdigital.com plus four redacted).",
+   "agent_env": "HTTP(S)_PROXY set to a transport proxy (redacted in the evidence). NO_PROXY exempts local addresses, the model host and its two IPs, two other model APIs (api.moonshot.cn, api.deepseek.com), three mirror hosts (mirrors.aliyun.com, gh-proxy.com, hf-mirror.com), and five corporate domain suffixes (redacted).",
    "verifier_env": {
     "UV_DEFAULT_INDEX": "https://mirrors.aliyun.com/pypi/simple/",
     "PIP_INDEX_URL": "https://mirrors.aliyun.com/pypi/simple/",
@@ -173,7 +176,7 @@
   "deepswe": {
    "mode": "allowlist (Pier per-task squid)",
    "allowed_hosts": [
-    "maas-api.antdigital.com"
+    "<internal-gateway-host>"
    ],
    "note": "No gateway transport proxy or mirror variables. Pier sets its own per-task squid proxy for the agent process only (that is how dtcoder reaches the model host); verifiers do not see it. The model host is the only allowed egress."
   }
@@ -195,7 +198,7 @@
   "Selection: chosen after the fact as the highest of 37 complete development sweeps; of the other 36, four scored 0/30 and 32 scored 15-24 (median 20). Treat 25/30 as an upper-end sample.",
   "The adapters append operating rules to every task instruction, preload uv and Python into every task container, and (Terminal-Bench only) pin the model host in /etc/hosts. See harness_modifications.",
   "No Runta golden checkpoint and no fresh restore per task; local Docker with 8 tasks in parallel on one host. No matched control run.",
-  "Kimi K3 via dtmaas over anthropic-messages, not Fireworks. Cost is FHE price-table repricing, not provider billing.",
+  "Kimi K3 via an internal model gateway over anthropic-messages, not Fireworks. Cost is FHE price-table repricing, not provider billing.",
   "Terminal-Bench: environment_mode=shared, public network through a transport proxy; verifier dependency installs use PyPI/HF/GitHub mirrors. DeepSWE: air-gapped except the model host; three image tags differ from the frozen task.toml.",
   "terminal-bench/build-cython-ext: verifier reward 1.0, but the agent was killed at the 900 s agent timeout before usage was persisted; FHE scoring counts a pass only with observed usage, so it is a failure.",
   "Cost coverage 28/30; headline cost figures are lower bounds.",
